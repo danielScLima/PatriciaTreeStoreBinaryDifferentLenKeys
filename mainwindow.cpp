@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     patriciaTreeStoreBinaryDifferentLenKeys =
-            new PatriciaTreeStoreBinaryDifferentLenKeys();
+            new PatriciaTreeStoreBinaryDifferentLenKeysDS();
 
     reloadDraw();
 }

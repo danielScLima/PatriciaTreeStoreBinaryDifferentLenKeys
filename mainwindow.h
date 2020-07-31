@@ -43,7 +43,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    PatriciaTreeStoreBinaryDifferentLenKeys* patriciaTreeStoreBinaryDifferentLenKeys = nullptr;
+    PatriciaTreeStoreBinaryDifferentLenKeysDS* patriciaTreeStoreBinaryDifferentLenKeys = nullptr;
 
     /*!
      * \brief updateDotFile

@@ -23,7 +23,7 @@ public:
         NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* father,
         int index
     ):
-        NodeOfPatriciaTreeStoreBinaryDifferentLenKeys(NodeType::LEAF, father),
+        NodeOfPatriciaTreeStoreBinaryDifferentLenKeys(NodeTypeOfPTSBDLK::LEAFNodeTypeOfPTSBDLK, father),
         index(index), data(data)
     {
 

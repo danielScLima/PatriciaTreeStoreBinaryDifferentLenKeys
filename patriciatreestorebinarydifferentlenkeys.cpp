@@ -3,19 +3,25 @@
 #include <sstream> //for std::stringstream
 #include <string>  //for std::string
 
-PatriciaTreeStoreBinaryDifferentLenKeys::PatriciaTreeStoreBinaryDifferentLenKeys
+PatriciaTreeStoreBinaryDifferentLenKeysDS::PatriciaTreeStoreBinaryDifferentLenKeysDS
 (
 
 )
 {
 }
 
-NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* PatriciaTreeStoreBinaryDifferentLenKeys::getRoot()
+NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* PatriciaTreeStoreBinaryDifferentLenKeysDS::getRoot()
 {
     return this->root;
 }
 
-bool PatriciaTreeStoreBinaryDifferentLenKeys::insert(const std::string& data)
+void PatriciaTreeStoreBinaryDifferentLenKeysDS::clearRoot()
+{
+    //it wa cleaned
+    this->root = nullptr;
+}
+
+bool PatriciaTreeStoreBinaryDifferentLenKeysDS::insert(const std::string& data)
 {
     bool valid = isAValidDataIoInsert(data);
     if (valid == false)
@@ -30,7 +36,7 @@ bool PatriciaTreeStoreBinaryDifferentLenKeys::insert(const std::string& data)
         NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* tmp = root;
         while (true)
         {
-            if (tmp->nodeType == NodeType::LEAF)
+            if (tmp->nodeType == NodeTypeOfPTSBDLK::LEAFNodeTypeOfPTSBDLK)
             {
                 NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* leaf =
                         (NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys*) tmp;
@@ -157,7 +163,6 @@ bool PatriciaTreeStoreBinaryDifferentLenKeys::insert(const std::string& data)
 
                         break;
                     }
-                    //else
                     else if (data.length() < leaf->data.length())
                     {
                         //caso com 1111 e insere 1
@@ -425,7 +430,7 @@ bool PatriciaTreeStoreBinaryDifferentLenKeys::insert(const std::string& data)
     return true;
 }
 
-int PatriciaTreeStoreBinaryDifferentLenKeys::getBitSampleForwardInPosAndDifference
+int PatriciaTreeStoreBinaryDifferentLenKeysDS::getBitSampleForwardInPosAndDifference
 (
     NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* initial,
     const std::string& data,
@@ -436,7 +441,7 @@ int PatriciaTreeStoreBinaryDifferentLenKeys::getBitSampleForwardInPosAndDifferen
     NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* tmp = initial;
     while (true)
     {
-        if (tmp->nodeType == NodeType::LEAF)
+        if (tmp->nodeType == NodeTypeOfPTSBDLK::LEAFNodeTypeOfPTSBDLK)
         {
             NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* leaf =
                     (NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys*) tmp;
@@ -460,7 +465,7 @@ int PatriciaTreeStoreBinaryDifferentLenKeys::getBitSampleForwardInPosAndDifferen
             NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys* branch =
                     (NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys*) tmp;
             if (branch->left != nullptr &&
-                    branch->left->nodeType == NodeType::LEAF)
+                    branch->left->nodeType == NodeTypeOfPTSBDLK::LEAFNodeTypeOfPTSBDLK)
             {
                 NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* leaf =
                         (NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys*) branch->left;
@@ -480,7 +485,7 @@ int PatriciaTreeStoreBinaryDifferentLenKeys::getBitSampleForwardInPosAndDifferen
                 return leaf->data.at(pos);
             }
             else if (branch->right != nullptr &&
-                     branch->right->nodeType == NodeType::LEAF)
+                     branch->right->nodeType == NodeTypeOfPTSBDLK::LEAFNodeTypeOfPTSBDLK)
             {
                 NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* leaf =
                         (NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys*) branch->right;
@@ -507,7 +512,7 @@ int PatriciaTreeStoreBinaryDifferentLenKeys::getBitSampleForwardInPosAndDifferen
     }
 }
 
-NodeOfPatriciaTreeStoreBinaryDifferentLenKeys *PatriciaTreeStoreBinaryDifferentLenKeys::search
+NodeOfPatriciaTreeStoreBinaryDifferentLenKeys *PatriciaTreeStoreBinaryDifferentLenKeysDS::search
 (
     const std::string& data
 )
@@ -519,7 +524,7 @@ NodeOfPatriciaTreeStoreBinaryDifferentLenKeys *PatriciaTreeStoreBinaryDifferentL
     NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* tmp = root;
     while (tmp != nullptr)
     {
-        if (tmp->nodeType == NodeType::LEAF)
+        if (tmp->nodeType == NodeTypeOfPTSBDLK::LEAFNodeTypeOfPTSBDLK)
         {
             //check string
             NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* leaf =
@@ -601,7 +606,7 @@ NodeOfPatriciaTreeStoreBinaryDifferentLenKeys *PatriciaTreeStoreBinaryDifferentL
     return nullptr;
 }
 
-NodeOfPatriciaTreeStoreBinaryDifferentLenKeys *PatriciaTreeStoreBinaryDifferentLenKeys::remove
+NodeOfPatriciaTreeStoreBinaryDifferentLenKeys *PatriciaTreeStoreBinaryDifferentLenKeysDS::remove
 (
     const std::string& data
 )
@@ -681,7 +686,7 @@ NodeOfPatriciaTreeStoreBinaryDifferentLenKeys *PatriciaTreeStoreBinaryDifferentL
     }
 }
 
-bool PatriciaTreeStoreBinaryDifferentLenKeys::branchChildrensCount
+bool PatriciaTreeStoreBinaryDifferentLenKeysDS::branchChildrensCount
 (
     NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys* branch
 )
@@ -697,7 +702,7 @@ bool PatriciaTreeStoreBinaryDifferentLenKeys::branchChildrensCount
     return sum;
 }
 
-bool PatriciaTreeStoreBinaryDifferentLenKeys::isAValidDataIoInsert(const std::string& data)
+bool PatriciaTreeStoreBinaryDifferentLenKeysDS::isAValidDataIoInsert(const std::string& data)
 {
     for (auto caracter: data)
     {
@@ -707,7 +712,7 @@ bool PatriciaTreeStoreBinaryDifferentLenKeys::isAValidDataIoInsert(const std::st
     return true;
 }
 
-void PatriciaTreeStoreBinaryDifferentLenKeys::replacePointerInFather
+void PatriciaTreeStoreBinaryDifferentLenKeysDS::replacePointerInFather
 (
     NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys* father,
     NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* oldSon,
@@ -720,7 +725,7 @@ void PatriciaTreeStoreBinaryDifferentLenKeys::replacePointerInFather
         father->right = newSon;
 }
 
-bool PatriciaTreeStoreBinaryDifferentLenKeys::isEqualUntilPosition
+bool PatriciaTreeStoreBinaryDifferentLenKeysDS::isEqualUntilPosition
 (
     const std::string& one,
     const std::string& two,
@@ -739,7 +744,7 @@ bool PatriciaTreeStoreBinaryDifferentLenKeys::isEqualUntilPosition
     return true; //they are equal until such position
 }
 
-int PatriciaTreeStoreBinaryDifferentLenKeys::isEqualUntilWhichPosition
+int PatriciaTreeStoreBinaryDifferentLenKeysDS::isEqualUntilWhichPosition
 (
     const std::string& one,
     const std::string& two
@@ -764,7 +769,7 @@ int PatriciaTreeStoreBinaryDifferentLenKeys::isEqualUntilWhichPosition
     return max;
 }
 
-std::string PatriciaTreeStoreBinaryDifferentLenKeys::getPointerAsString
+std::string PatriciaTreeStoreBinaryDifferentLenKeysDS::getPointerAsString
 (
     NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* node
 )
@@ -776,7 +781,7 @@ std::string PatriciaTreeStoreBinaryDifferentLenKeys::getPointerAsString
     return "\""+name+"\"";
 }
 
-void PatriciaTreeStoreBinaryDifferentLenKeys::getDrawInNode
+void PatriciaTreeStoreBinaryDifferentLenKeysDS::getDrawInNode
 (
     NodeOfPatriciaTreeStoreBinaryDifferentLenKeys *node,
     std::string &nodesDefinition,
@@ -784,7 +789,7 @@ void PatriciaTreeStoreBinaryDifferentLenKeys::getDrawInNode
     int &nullCounter
 )
 {
-    if (node->nodeType == NodeType::LEAF)
+    if (node->nodeType == NodeTypeOfPTSBDLK::LEAFNodeTypeOfPTSBDLK)
     {
         NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* conv =
                 (NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys*) node;
@@ -857,7 +862,7 @@ void PatriciaTreeStoreBinaryDifferentLenKeys::getDrawInNode
     }
 }
 
-const std::string PatriciaTreeStoreBinaryDifferentLenKeys::getGraphvizDraw()
+const std::string PatriciaTreeStoreBinaryDifferentLenKeysDS::getGraphvizDraw()
 {
     std::string general = "digraph g{";
     std::string nodesDefinition;
@@ -883,7 +888,7 @@ const std::string PatriciaTreeStoreBinaryDifferentLenKeys::getGraphvizDraw()
 }
 
 
-PatriciaTreeStoreBinaryDifferentLenKeys::~PatriciaTreeStoreBinaryDifferentLenKeys()
+PatriciaTreeStoreBinaryDifferentLenKeysDS::~PatriciaTreeStoreBinaryDifferentLenKeysDS()
 {
     if (this->root != nullptr)
     {
