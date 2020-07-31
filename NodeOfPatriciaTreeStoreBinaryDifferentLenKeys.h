@@ -2,11 +2,11 @@
 #define NODEOFPATRICIATREESTOREBINARYDIFFERENTLENKEYS_H
 
 /*!
- * \brief The NodeType enum
+ * \brief The NodeTypeOfPTSBDLK enum
  */
-enum NodeType
+enum NodeTypeOfPTSBDLK
 {
-    LEAF, BRANCH
+    LEAFNodeTypeOfPTSBDLK, BRANCHNodeTypeOfPTSBDLK
 };
 
 /*!
@@ -22,7 +22,7 @@ public:
      */
     NodeOfPatriciaTreeStoreBinaryDifferentLenKeys
     (
-        NodeType nodeType,
+        NodeTypeOfPTSBDLK nodeType,
         NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* father
     ):
         nodeType(nodeType), father(father)
@@ -41,7 +41,7 @@ public:
      */
     virtual void dealockSubtree() = 0;
 
-    NodeType nodeType = NodeType::LEAF;
+    NodeTypeOfPTSBDLK nodeType = NodeTypeOfPTSBDLK::LEAFNodeTypeOfPTSBDLK;
     NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* father = nullptr;
 };
 

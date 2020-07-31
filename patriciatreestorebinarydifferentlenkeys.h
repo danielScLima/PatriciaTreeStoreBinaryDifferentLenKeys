@@ -9,9 +9,9 @@
 #include "NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys.h"
 
 /*!
- * \brief The PatriciaTreeStoreBinaryDifferentLenKeys class
+ * \brief The PatriciaTreeStoreBinaryDifferentLenKeysDS class
  */
-class PatriciaTreeStoreBinaryDifferentLenKeys
+class PatriciaTreeStoreBinaryDifferentLenKeysDS
 {
 private:
     NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* root = nullptr;
@@ -103,11 +103,11 @@ private:
     );
 public:
     /*!
-     * \brief PatriciaTreeStoreBinaryDifferentLenKeys
+     * \brief PatriciaTreeStoreBinaryDifferentLenKeysDS
      */
-    PatriciaTreeStoreBinaryDifferentLenKeys();
+    PatriciaTreeStoreBinaryDifferentLenKeysDS();
 
-    ~PatriciaTreeStoreBinaryDifferentLenKeys();
+    ~PatriciaTreeStoreBinaryDifferentLenKeysDS();
 
     /*!
      * \brief getGraphvizDraw
@@ -148,6 +148,8 @@ public:
      * \return
      */
     NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* getRoot();
+
+    void clearRoot();
 };
 
 #endif // PATRICIA_TREE_STORE_BINARY_DIFFERENT_LEN_KEYS_H
