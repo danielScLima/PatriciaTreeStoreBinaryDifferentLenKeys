@@ -177,12 +177,12 @@ bool PatriciaTreeStoreBinaryDifferentLenKeysDS::insert(const std::string& data)
                         {
                             if (data.at(ind) != leaf->data.at(ind))
                             {
-                                less = ind+1;
+                                less = ind;
                                 break;
                             }
                         }
-                        if (less < pos)
-                            less = pos;
+                        if (less != -1 && less < pos)
+                            pos = less;
 
 
                         char bitSample = leaf->data.at(pos);
@@ -196,36 +196,75 @@ bool PatriciaTreeStoreBinaryDifferentLenKeysDS::insert(const std::string& data)
                             branchFather = (NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys*) prev->father;
                         }
 
-                        NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys* branchUp = (NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys*) prev;
-                        if (branchUp!= nullptr && branchUp->index == pos) //não precisa criar branch
+                        if (pos == data.length())
                         {
-                            NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* newLeafMiss = new NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys(data, branchUp, pos);
-                            branchUp->missing = newLeafMiss;
+                            NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys* branchUp = (NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys*) prev;
+                            if (branchUp!= nullptr && branchUp->index == pos) //não precisa criar branch
+                            {
+                                NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* newLeafMiss = new NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys(data, branchUp, pos);
+                                branchUp->missing = newLeafMiss;
+                            }
+                            else
+                            {
+                                //insere em prev (quebrando)
+                                NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys* newFather =
+                                        new NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys(branchFather, pos);
+                                if (branchFather == nullptr)
+                                    root = newFather;
+                                NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* newLeafMiss =
+                                        new NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys(data, newFather, pos);
+
+                                newFather->missing = newLeafMiss;
+                                newLeafMiss->father = newFather;
+
+                                //get bit representation
+                                if (bitSample == '0')
+                                {
+                                    newFather->left = prev;
+                                    prev->father = newFather;
+                                }
+                                else if (bitSample == '1')
+                                {
+                                    newFather->right = prev;
+                                    prev->father = newFather;
+                                }
+
+                                if (branchFather != nullptr)
+                                {
+                                    //replace in father (branchFather), o prev por newFather
+                                    replacePointerInFather
+                                    (
+                                        (NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys*) branchFather,
+                                        prev,
+                                        newFather
+                                    );
+                                }
+                                else
+                                {
+                                    root = newFather;
+                                }
+                            }
                         }
                         else
                         {
-                            //insere em prev (quebrando)
                             NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys* newFather =
                                     new NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys(branchFather, pos);
                             if (branchFather == nullptr)
                                 root = newFather;
-                            NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* newLeafMiss =
+                            NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* newLeaf =
                                     new NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys(data, newFather, pos);
 
-                            newFather->missing = newLeafMiss;
-                            newLeafMiss->father = newFather;
-
-                            //get bit representation
-                            if (bitSample == '0')
+                            if (bitSample == '0') //do leaf
                             {
                                 newFather->left = prev;
-                                prev->father = newFather;
+                                newFather->right = newLeaf;
                             }
-                            else if (bitSample == '1')
+                            else
                             {
+                                newFather->left = newLeaf;
                                 newFather->right = prev;
-                                prev->father = newFather;
                             }
+                            prev->father = newFather;
 
                             if (branchFather != nullptr)
                             {
