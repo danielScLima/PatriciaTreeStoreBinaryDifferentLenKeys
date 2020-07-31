@@ -157,7 +157,8 @@ bool PatriciaTreeStoreBinaryDifferentLenKeys::insert(const std::string& data)
 
                         break;
                     }
-                    else
+                    //else
+                    else if (data.length() < leaf->data.length())
                     {
                         //caso com 1111 e insere 1
                         //staring from root
@@ -235,6 +236,61 @@ bool PatriciaTreeStoreBinaryDifferentLenKeys::insert(const std::string& data)
                             {
                                 root = newFather;
                             }
+                        }
+
+                        break;
+                    }
+                    else
+                    {
+                        //é leaf
+                        //data.length() > leaf->data.length()
+
+                        //staring from root
+                        //insert in the first position with the diference id
+                        int pos = isEqualUntilWhichPosition(data, leaf->data);
+                        pos = pos+1; //+1 é o ponto de diferença
+
+                        NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* prev = leaf;
+                        NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys* branchFather = (NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys*) prev->father;
+                        while (branchFather != nullptr && branchFather->index > pos)
+                        {
+                            prev = branchFather;
+                            branchFather = (NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys*) prev->father;
+                        }
+
+                        //insere em prev (quebrando)
+                        NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys* newFather =
+                                new NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys(branchFather, pos);
+                        if (branchFather == nullptr)
+                            root = newFather;
+                        NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys* newLeaf =
+                                new NodeLeafOfPatriciaTreeStoreBinaryDifferentLenKeys("", nullptr, pos);
+                        newFather->left = newLeaf;
+                        newLeaf->father = newFather;
+                        newFather->right = prev;
+                        prev->father = newFather;
+
+                        newLeaf->data = data;
+                        if (data.at(pos) == '1') //deve ficar na direita
+                        {
+                            NodeOfPatriciaTreeStoreBinaryDifferentLenKeys* temp = newFather->left;
+                            newFather->left = newFather->right;
+                            newFather->right = temp;
+                        }
+
+                        if (branchFather != nullptr)
+                        {
+                            //replace in father (branchFather), o prev por newFather
+                            replacePointerInFather
+                            (
+                                (NodeBranchOfPatriciaTreeStoreBinaryDifferentLenKeys*) branchFather,
+                                prev,
+                                newFather
+                            );
+                        }
+                        else
+                        {
+                            root = newFather;
                         }
 
                         break;
