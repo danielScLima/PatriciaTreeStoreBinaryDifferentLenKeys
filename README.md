@@ -1,5 +1,7 @@
 PatriciaTreeStoreBinaryDifferentLenkeys
 ====================
+Building with AppVeyor: [![Build status](https://ci.appveyor.com/api/projects/status/vulhclw3hkfbys8p?svg=true)](https://ci.appveyor.com/project/DanielSLima/patriciatreestorebinarydifferentlenkeys)
+
 Building with Travis: [![Build Status](https://www.travis-ci.com/danielScLima/PatriciaTreeStoreBinaryDifferentLenKeys.svg?branch=master)](https://www.travis-ci.com/danielScLima/PatriciaTreeStoreBinaryDifferentLenKeys)
 
 This repository has a project with the implementation of a PatriciaTreeStoreBinaryDifferentLenkeys.
