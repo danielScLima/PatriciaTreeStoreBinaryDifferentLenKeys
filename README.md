@@ -1,5 +1,6 @@
 PatriciaTreeStoreBinaryDifferentLenkeys
 ====================
+Building with Travis: [![Build Status](https://www.travis-ci.com/danielScLima/PatriciaTreeStoreBinaryDifferentLenKeys.svg?branch=master)](https://www.travis-ci.com/danielScLima/PatriciaTreeStoreBinaryDifferentLenKeys)
 
 This repository has a project with the implementation of a PatriciaTreeStoreBinaryDifferentLenkeys.
 
